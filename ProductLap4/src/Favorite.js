@@ -1,10 +1,34 @@
 import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
-import ContactThumbnail from './ContactThumbnail';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {useSelector} from 'react-redux';
 
 const keyExtractor = ({phone}) => phone;
 
-const Favorite = () => {
+const ContactThumbnail = ({avatar, onPress}) => {
+  return (
+    <TouchableOpacity onPress={() => onPress()}>
+      <Image
+        source={{uri: avatar}}
+        style={{
+          width: 90,
+          height: 90,
+          margin: 10,
+          borderRadius: 45,
+          borderColor: 'white',
+          borderWidth: 2,
+        }}
+      />
+    </TouchableOpacity>
+  );
+};
+
+const Favorite = ({navigation}) => {
   const {contacts} = useSelector(state => state);
   const renderFavoriteThumbnail = ({item}) => {
     const {avatar} = item;
@@ -15,9 +39,11 @@ const Favorite = () => {
       />
     );
   };
-  const favorite = contacts.filter(contact => contact.favorite);
+
+  const favorites = contacts.filter(contact => contact.favorite);
+
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
         data={favorites}
         keyExtractor={keyExtractor}
@@ -29,10 +55,16 @@ const Favorite = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {flex: 1, justifyContent: 'center', backgroundColor: 'white'},
-
-  list: {alignItems: 'center'},
-});
-
 export default Favorite;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  list: {
+    alignItems: 'center',
+  },
+});

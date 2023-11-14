@@ -1,7 +1,23 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import ContactListItem from './ContactListItem';
-import ContactThumbnail from './ContactThumbnail';
+import {Divider, IconButton, List} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+const DetailListItem = ({title, description, icon}) => {
+  return (
+    <View>
+      <List.Item
+        style={{padding: 16}}
+        title={title}
+        titleStyle={{color: 'black', fontSize: 20}}
+        description={description}
+        descriptionStyle={{color: 'black', fontSize: 16}}
+        left={props => <Icon name={icon} size={30} color="#900" />}
+      />
+      <Divider />
+    </View>
+  );
+};
 
 const ProfileContact = () => {
   const {contact} = route.params;
@@ -13,9 +29,13 @@ const ProfileContact = () => {
         <ContactThumbnail avatar={avatar} name={name} phone={phone} />
       </View>
       <View style={styles.detailSection}>
-        <ContactListItem icon="mail" title="Email" subtitle={email} />
-        <ContactListItem icon="phone" title="Work" subtitle={phone} />
-        <ContactListItem icon="smartphone" title="Personal" subtitle={cell} />
+        <DetailListItem title={'Email'} description={email} icon={'mail'} />
+        <DetailListItem title={'Work'} description={phone} icon={'phone'} />
+        <DetailListItem
+          title={'Personal'}
+          description={cell}
+          icon={'smartphone'}
+        />
         <View style={{alignItems: 'center'}}>
           <IconButton
             icon={favorite == true ? 'star-check' : 'star-check-outline'}

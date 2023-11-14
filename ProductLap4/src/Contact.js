@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import ContactListItem from './ContactListItem';
+import {fetchContactsSuccess, mapContacts} from './Store';
 
-const {mapContacts, fetchContactsSuccess} = require('./Store');
 const keyExtractor = ({phone}) => phone;
 
 const fetchContacts = async () => {
@@ -20,7 +21,9 @@ const Contacts = ({navigation}) => {
       .then(contacts => {
         dispatch(fetchContactsSuccess(contacts));
       })
-      .catch(e => {});
+      .catch(error => {
+        console.log('error here: ', error);
+      });
   }, []);
 
   const renderContacts = ({item}) => {

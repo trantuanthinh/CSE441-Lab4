@@ -1,69 +1,81 @@
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
 import 'react-native-gesture-handler';
+import { useTheme } from 'react-native-paper';
 import { Provider } from 'react-redux';
 import Contact from './src/Contact';
 import Favorite from './src/Favorite';
 import ProfileContact from './src/ProfileContact';
 import Store from './src/Store';
 
-const Stack = createStackNavigator();
 
-function ContactsScreen() {
+const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator()
+const Tab = createMaterialBottomTabNavigator()
+
+function App() {
     return (
-        <Stack.Navigator
-            initialRouteName="Contact" screenOptions={{ headerShown: true }}>
-            <Stack.Screen name='Contact' component={Contact}
-                options={{ title: "Contact" }}
-            />
-
-            <Stack.Screen name='ProfileContact' component={ProfileContact}
-                options={{ title: "Profile Contact" }}
-            />
-        </Stack.Navigator>
+        <Provider store={Store}>
+            <NavigationContainer>
+                {/* <TabNavigator /> */}
+                <BottomNavigator />
+            </NavigationContainer>
+        </Provider>
     );
-};
+}
 
-function FavoriteScreen() {
+export default App;
+
+const BottomNavigator = () => {
     return (
-        <Stack.Navigator
-            initialRouteName="Favorite" screenOptions={{ headerShown: true }}>
-            <Stack.Screen name='Favorite' component={Favorite}
-                options={{ title: "Favorite" }}
-            />
+        <Drawer.Navigator >
+            <Drawer.Screen name="TabContacts" component={ContactScreens} />
+            <Drawer.Screen name="Favorites" component={FavoriteScreen} />
+        </Drawer.Navigator>
+    )
+}
 
-            <Stack.Screen name='ProfileContact' component={ProfileContact}
-                options={{ title: "Profile Contact" }}
-            />
-        </Stack.Navigator>
-    );
-};
-
-const Tab = createMaterialBottomTabNavigator();
 const TabNavigator = () => {
+    const theme = useTheme()
     return (
-        <Tab.Navigator initialRouteName='ContactScreen'
-            barStyle={{ backgroundColor: 'blue' }}
+        <Tab.Navigator
+            initialRouteName='TabContacts'
+            barStyle={{ backgroundColor: theme.colors.surface }}
             labeled={false}
-            activeColor={'greyLight'}
-            inactiveColor={"greyDark"}>
-
-            <Tab.Screen name="Contact" component={ContactsScreen} options={{ tabBarIcon: 'format-list-bulleted' }} />
-
-            <Tab.Screen name="Favorite" component={FavoriteScreen} options={{ tabBarIcon: 'star-check' }} />
+            activeColor={theme.colors.primaryContainer}
+            inactiveColor={theme.colors.secondary}
+        >
+            <Tab.Screen name='TabContacts' component={ContactScreens} options={{ tabBarIcon: 'format-list-bulleted' }}></Tab.Screen>
+            <Tab.Screen name='Favorites' component={FavoriteScreen} options={{ tabBarIcon: 'star-check' }}></Tab.Screen>
         </Tab.Navigator>
     )
 }
 
-const App = () => {
+function ContactScreens() {
     return (
-        <Provider store={Store}>
-            <NavigationContainer>
-                <TabNavigator />
-            </NavigationContainer>
-        </Provider>
+        <Stack.Navigator
+            initialRouteName='Contacts'
+            screenOptions={{ headerShown: false }}
+        >
+            <Stack.Screen name='Contacts' component={Contact} options={{ title: 'Contacts' }} />
+            <Stack.Screen name='ProfileContact' component={ProfileContact} options={{ title: 'Profile Contact' }} />
+        </Stack.Navigator>
     )
 }
 
-export default App
+function FavoriteScreen() {
+    return (
+        <Stack.Navigator
+            initialRouteName='Favorites'
+            screenOptions={{
+                headerShown: false
+            }}
+        >
+            <Stack.Screen name='Favorites' component={Favorite} options={{ title: 'Favorites' }} />
+            <Stack.Screen name='ProfileContact' component={ProfileContact} options={{ title: 'Profile Contact' }} />
+        </Stack.Navigator>
+    )
+}

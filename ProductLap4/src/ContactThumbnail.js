@@ -1,5 +1,6 @@
-import ProTypes from 'prop-types';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import React from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const ContactThumbnail = () => {
@@ -7,17 +8,16 @@ const ContactThumbnail = () => {
 
   const ImageContact = onPress ? TouchableOpacity : View;
   return (
-    <View>
+    <View style={styles.container}>
       <ImageContact onPress={onPress}>
         <Image source={{uri: avatar}} style={styles.avatar} />
       </ImageContact>
 
       {name !== '' && <Text style={[styles.name, colorStyle]}>{name}</Text>}
       {phone !== '' && (
-        <View>
-          style={styles.phoneSection}
+        <View style={styles.phoneSection}>
           <Icon name="phone" size={16} style={{color: textColor}} />
-          <Text> {phone}</Text>
+          <Text style={[styles.phone, colorStyle]}> {phone}</Text>
         </View>
       )}
     </View>
