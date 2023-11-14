@@ -1,5 +1,6 @@
-import { FlatList, StyleSheet } from 'react';
-import React from 'react-native';
+import React, {useEffect} from 'react';
+import {FlatList, StyleSheet, View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 
 const {mapContacts, fetchContactsSuccess} = require('./Store');
 const keyExtractor = ({phone}) => phone;
@@ -29,7 +30,7 @@ const Contacts = ({navigation}) => {
         name={name}
         avatar={avatar}
         phone={phone}
-        onPress={() => navigaton.navigate('ProfileContact', {contact: item})}
+        onPress={() => navigation.navigate('ProfileContact', {contact: item})}
       />
     );
   };

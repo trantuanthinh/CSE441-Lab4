@@ -24,8 +24,6 @@ const ContactThumbnail = () => {
   );
 };
 
-export default ContactThumbnail;
-
 ContactThumbnail.proTypes = {
   name: ProTypes.string,
   avatar: ProTypes.string,
@@ -67,3 +65,5 @@ const styles = StyleSheet.create({
 
   phone: {marginLeft: 4, fontSize: 16, fontWeight: 'bold'},
 });
+
+export default ContactThumbnail;

@@ -19,8 +19,6 @@ const ContactListItem = () => {
   );
 };
 
-export default ContactListItem;
-
 const styles = StyleSheet.create({
   container: {paddingLeft: 50, margin: 0},
 
@@ -42,3 +40,5 @@ const styles = StyleSheet.create({
 
   subtitle: {color: 'blue', fontSize: 14, marginTop: 4},
 });
+
+export default ContactListItem;

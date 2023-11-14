@@ -29,10 +29,10 @@ const Favorite = () => {
   );
 };
 
-export default Favorite;
-
 const styles = StyleSheet.create({
   container: {flex: 1, justifyContent: 'center', backgroundColor: 'white'},
 
   list: {alignItems: 'center'},
 });
+
+export default Favorite;
